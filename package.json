@@ -1,4 +1,5 @@
 {
+
   "name": "movies-library",
   "version": "1.0.0",
   "description": "",
@@ -18,6 +19,8 @@
     "url": "https://github.com/Atekaalsheyab/Movies-Library/issues"
   },
   "homepage": "https://github.com/Atekaalsheyab/Movies-Library#readme",
+
+
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2"
