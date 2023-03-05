@@ -36,6 +36,7 @@ server.get('/favorite', (req,res)=>{
     res.send("Welcome to Favorite Page"); 
 })
 
+
 // Handle errors 
 server.get('*',(req,res)=>{
     res.status(500).send("Sorry, something went wrong"); 
