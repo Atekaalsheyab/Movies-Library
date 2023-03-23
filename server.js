@@ -17,7 +17,7 @@ require('dotenv').config();
 //1. import the pg library in order to connect to the DBMS
 const pg = require('pg');
 ///2. create obj from Client, i will use this obj to connect with demo13 database  
-const client = new pg.Client(process.env.DATABASE_URL);
+const client = new pg.Client(process.env.DATABASE_Movie_URL);
 
 
 
@@ -59,11 +59,17 @@ server.get('/favorite', (req, res) => {
 })
 
 //Add fav Recipe 
-server.post('/favRecipes', addfavRecipeshandler); 
+//server.post('/favRecipes', addfavRecipeshandler); 
+
+//Add fav movie 
+server.post('/favMovies', addfavMoviesHandler);
+
+//get fav movies 
+server.get('/favMovies', getfavMoviesHandler);
 
 // route to get data from specific table 
 // favRecipe route 
-server.get('/favRecipes', getfavRecipesHandler);
+//server.get('/favRecipes', getfavRecipesHandler);
 
 
 // Handle errors 
@@ -72,7 +78,7 @@ server.get('*', (req, res) => {
 })
 
 
-
+/*
 // Handlers 
 function getfavRecipesHandler(req, res) {
     // return all fav Recipes (favRecipes table conent)
@@ -93,5 +99,25 @@ function addfavRecipeshandler(req,res){
     client.query(sql,values )
     .then((data)=>{
         res.send("your data was added"); 
+    })
+}
+*/
+function addfavMoviesHandler(req, res){
+    const movie= req.body; 
+    const sql = `INSERT INTO favMovies (title, poster_path, overview) VALUES ($1,$2,$3) RETURNING *;`;
+    const values =[movie.title, movie.poster_path, movie.overview];
+
+    client.query(sql, values)
+    .then((data)=>{
+        res.send("the data was added"); 
+
+    })
+}
+
+function getfavMoviesHandler(req, res){
+    const sql = `SELECT * from favMovies`; 
+    client.query(sql)
+    .then((data)=>{
+        res.send(data.rows); 
     })
 }
